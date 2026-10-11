@@ -35,7 +35,7 @@ from pipeline import make_song  # noqa: E402  (must come after the ffmpeg check)
 
 st.set_page_config(page_title="Say-nthesizer", page_icon="🎤", layout="wide")
 
-SWATCHES = ["#FF5B22", "#2E5BFF", "#FFC21A", "#14A37F"]
+SWATCHES = ["#E8662A", "#2F7F7A", "#F2B632", "#B5492B"]  # orange, teal, mustard, brick
 
 EXAMPLES = [
     "A power ballad about my flatmate stealing my oat milk",
@@ -46,28 +46,28 @@ EXAMPLES = [
 # Gig-poster wallpaper tile: vinyl, notes, a mic, equaliser bars, a soundwave, sparkles.
 PATTERN_SVG = """<svg xmlns='http://www.w3.org/2000/svg' width='560' height='560' viewBox='0 0 560 560'>
 <g transform='translate(110 120)'>
-<circle r='64' fill='#14123A' fill-opacity='.55'/>
-<circle r='52' fill='none' stroke='#fff' stroke-opacity='.16' stroke-width='1.5'/>
-<circle r='42' fill='none' stroke='#fff' stroke-opacity='.16' stroke-width='1.5'/>
-<circle r='32' fill='none' stroke='#fff' stroke-opacity='.16' stroke-width='1.5'/>
-<circle r='20' fill='#FFC21A' fill-opacity='.9'/>
-<circle r='3.5' fill='#14123A'/>
-<path d='M-50 -34 A60 60 0 0 1 -30 -53' stroke='#fff' stroke-opacity='.45' stroke-width='4' fill='none' stroke-linecap='round'/>
+<circle r='64' fill='#173F3C' fill-opacity='.7'/>
+<circle r='52' fill='none' stroke='#F6E8C3' stroke-opacity='.12' stroke-width='1.5'/>
+<circle r='42' fill='none' stroke='#F6E8C3' stroke-opacity='.12' stroke-width='1.5'/>
+<circle r='32' fill='none' stroke='#F6E8C3' stroke-opacity='.12' stroke-width='1.5'/>
+<circle r='20' fill='#F2B632' fill-opacity='.9'/>
+<circle r='3.5' fill='#173F3C'/>
+<path d='M-50 -34 A60 60 0 0 1 -30 -53' stroke='#F6E8C3' stroke-opacity='.4' stroke-width='4' fill='none' stroke-linecap='round'/>
 </g>
 <g transform='translate(432 402) rotate(20)'>
-<circle r='48' fill='#14123A' fill-opacity='.55'/>
-<circle r='38' fill='none' stroke='#fff' stroke-opacity='.16' stroke-width='1.5'/>
-<circle r='29' fill='none' stroke='#fff' stroke-opacity='.16' stroke-width='1.5'/>
-<circle r='16' fill='#FF5B8A' fill-opacity='.95'/>
-<circle r='3' fill='#14123A'/>
-<path d='M-38 -24 A45 45 0 0 1 -22 -39' stroke='#fff' stroke-opacity='.45' stroke-width='3.5' fill='none' stroke-linecap='round'/>
+<circle r='48' fill='#173F3C' fill-opacity='.7'/>
+<circle r='38' fill='none' stroke='#F6E8C3' stroke-opacity='.12' stroke-width='1.5'/>
+<circle r='29' fill='none' stroke='#F6E8C3' stroke-opacity='.12' stroke-width='1.5'/>
+<circle r='16' fill='#E8662A' fill-opacity='.9'/>
+<circle r='3' fill='#173F3C'/>
+<path d='M-38 -24 A45 45 0 0 1 -22 -39' stroke='#F6E8C3' stroke-opacity='.4' stroke-width='3.5' fill='none' stroke-linecap='round'/>
 </g>
-<g transform='translate(330 66) rotate(-8)' fill='#FFE9A8' fill-opacity='.85'>
+<g transform='translate(330 66) rotate(-8)' fill='#7FB8AE' fill-opacity='.55'>
 <ellipse cx='0' cy='38' rx='13' ry='9' transform='rotate(-20 0 38)'/>
 <rect x='10' y='-8' width='4' height='46'/>
 <path d='M14 -8 C32 0 38 16 30 32 C36 14 26 8 14 8 Z'/>
 </g>
-<g transform='translate(58 376) rotate(6)' fill='#7DF9E0' fill-opacity='.8'>
+<g transform='translate(58 376) rotate(6)' fill='#F6E8C3' fill-opacity='.4'>
 <ellipse cx='0' cy='40' rx='13' ry='9' transform='rotate(-20 0 40)'/>
 <ellipse cx='34' cy='34' rx='13' ry='9' transform='rotate(-20 34 34)'/>
 <rect x='10' y='-6' width='4' height='46'/>
@@ -75,33 +75,33 @@ PATTERN_SVG = """<svg xmlns='http://www.w3.org/2000/svg' width='560' height='560
 <polygon points='10,-6 48,-14 48,-2 10,6'/>
 </g>
 <g transform='translate(190 322)'>
-<rect x='-14' y='-30' width='28' height='44' rx='14' fill='#FF5B8A' fill-opacity='.9'/>
-<path d='M-14 -16 H14 M-14 -6 H14 M-14 4 H14' stroke='#14123A' stroke-opacity='.45' stroke-width='2'/>
-<path d='M-24 2 A24 24 0 0 0 24 2' fill='none' stroke='#FFE9A8' stroke-opacity='.85' stroke-width='3' stroke-linecap='round'/>
-<path d='M0 26 V40 M-12 40 H12' stroke='#FFE9A8' stroke-opacity='.85' stroke-width='3' stroke-linecap='round'/>
+<rect x='-14' y='-30' width='28' height='44' rx='14' fill='#E8662A' fill-opacity='.7'/>
+<path d='M-14 -16 H14 M-14 -6 H14 M-14 4 H14' stroke='#173F3C' stroke-opacity='.5' stroke-width='2'/>
+<path d='M-24 2 A24 24 0 0 0 24 2' fill='none' stroke='#F6E8C3' stroke-opacity='.5' stroke-width='3' stroke-linecap='round'/>
+<path d='M0 26 V40 M-12 40 H12' stroke='#F6E8C3' stroke-opacity='.5' stroke-width='3' stroke-linecap='round'/>
 </g>
-<g transform='translate(262 480)' stroke='#14123A' stroke-opacity='.5' stroke-width='2'>
-<rect x='0' y='-40' width='13' height='40' fill='#FFC21A' fill-opacity='.9'/>
-<rect x='20' y='-80' width='13' height='80' fill='#FF5B8A' fill-opacity='.9'/>
-<rect x='40' y='-55' width='13' height='55' fill='#14E0A8' fill-opacity='.9'/>
-<rect x='60' y='-100' width='13' height='100' fill='#FF8A3D' fill-opacity='.9'/>
-<rect x='80' y='-30' width='13' height='30' fill='#FFC21A' fill-opacity='.9'/>
-<rect x='100' y='-70' width='13' height='70' fill='#FF5B8A' fill-opacity='.9'/>
+<g transform='translate(262 480)' stroke='#173F3C' stroke-opacity='.45' stroke-width='2'>
+<rect x='0' y='-40' width='13' height='40' fill='#F2B632' fill-opacity='.75'/>
+<rect x='20' y='-80' width='13' height='80' fill='#7FB8AE' fill-opacity='.5'/>
+<rect x='40' y='-55' width='13' height='55' fill='#E8662A' fill-opacity='.7'/>
+<rect x='60' y='-100' width='13' height='100' fill='#F6E8C3' fill-opacity='.4'/>
+<rect x='80' y='-30' width='13' height='30' fill='#7FB8AE' fill-opacity='.5'/>
+<rect x='100' y='-70' width='13' height='70' fill='#F2B632' fill-opacity='.75'/>
 </g>
-<path d='M0 262 Q35 214 70 262 T140 262 T210 262 T280 262 T350 262 T420 262 T490 262 T560 262' fill='none' stroke='#fff' stroke-opacity='.3' stroke-width='3'/>
-<g fill='#fff' fill-opacity='.85'>
+<path d='M0 262 Q35 214 70 262 T140 262 T210 262 T280 262 T350 262 T420 262 T490 262 T560 262' fill='none' stroke='#F6E8C3' stroke-opacity='.2' stroke-width='3'/>
+<g fill='#F6E8C3' fill-opacity='.6'>
 <path transform='translate(236 186)' d='M0 -14 Q2 -2 14 0 Q2 2 0 14 Q-2 2 -14 0 Q-2 -2 0 -14Z'/>
 <path transform='translate(500 150) scale(.8)' d='M0 -14 Q2 -2 14 0 Q2 2 0 14 Q-2 2 -14 0 Q-2 -2 0 -14Z'/>
 <path transform='translate(36 238) scale(.7)' d='M0 -14 Q2 -2 14 0 Q2 2 0 14 Q-2 2 -14 0 Q-2 -2 0 -14Z'/>
 <path transform='translate(520 330) scale(.9)' d='M0 -14 Q2 -2 14 0 Q2 2 0 14 Q-2 2 -14 0 Q-2 -2 0 -14Z'/>
 <path transform='translate(410 262) scale(.6)' d='M0 -14 Q2 -2 14 0 Q2 2 0 14 Q-2 2 -14 0 Q-2 -2 0 -14Z'/>
 </g>
-<g fill-opacity='.8'>
-<circle cx='160' cy='40' r='5' fill='#FFC21A'/>
-<circle cx='470' cy='230' r='6' fill='#14E0A8'/>
-<circle cx='400' cy='520' r='5' fill='#FF8A3D'/>
-<circle cx='30' cy='500' r='6' fill='#FF5B8A'/>
-<circle cx='520' cy='60' r='5' fill='#7DF9E0'/>
+<g fill-opacity='.7'>
+<circle cx='160' cy='40' r='5' fill='#F2B632'/>
+<circle cx='470' cy='230' r='6' fill='#E8662A'/>
+<circle cx='400' cy='520' r='5' fill='#7FB8AE'/>
+<circle cx='30' cy='500' r='6' fill='#F2B632'/>
+<circle cx='520' cy='60' r='5' fill='#E8662A'/>
 </g>
 </svg>"""
 
@@ -111,28 +111,22 @@ CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap');
 
 :root {
-  --card: #F7F5F0;
-  --cream: #FFF4D6;
+  --card: #FAF3E3;
+  --cream: #F6E8C3;
   --ink: #1F2328;
-  --muted: #565B62;
-  --orange: #FF5B22;
-  --blue: #2E5BFF;
-  --yellow: #FFC21A;
-  --green: #14A37F;
+  --muted: #5A5A52;
+  --orange: #E8662A;
+  --teal: #2F7F7A;
+  --yellow: #F2B632;
+  --brick: #B5492B;
   --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
 }
 
-/* ---------- wallpaper: stage lights, sunburst, gig-poster doodles ---------- */
+/* ---------- wallpaper: dusty teal, tone-on-tone doodles, 70s arcs ---------- */
 .stApp {
-  background-color: #2B2FD9;
-  background-image:
-    url("__PATTERN__"),
-    radial-gradient(circle at 8% 0%, rgba(20, 224, 168, 0.55), rgba(20, 224, 168, 0) 38%),
-    radial-gradient(circle at 96% 4%, rgba(255, 91, 138, 0.6), rgba(255, 91, 138, 0) 40%),
-    radial-gradient(ellipse 85% 55% at 50% 120%, #FFC21A 0%, #FF8A3D 22%, #FF5B8A 42%, rgba(255, 91, 138, 0) 72%),
-    repeating-conic-gradient(from 0deg at 50% 120%, #3A30E8 0deg 7deg, #2822C4 7deg 14deg);
-  background-size: 560px 560px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
-  background-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  background-color: black;
+  background-size: 100% 100%, 100% 100%, 100% 100%, 560px 560px;
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
   background-attachment: fixed;
   color: var(--ink);
   font-family: 'Figtree', system-ui, sans-serif;
@@ -214,7 +208,7 @@ header[data-testid="stHeader"] { background: transparent; }
 .stApp .stButton > button:active,
 .stApp .stDownloadButton > button:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
 .stApp .stButton > button:focus-visible,
-.stApp .stDownloadButton > button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.stApp .stDownloadButton > button:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
 .stApp .stButton > button:disabled,
 .stApp .stButton > button[kind="primary"]:disabled,
 .stApp .stButton > button[data-testid="stBaseButton-primary"]:disabled {
@@ -225,11 +219,11 @@ header[data-testid="stHeader"] { background: transparent; }
 .eq { display: flex; align-items: flex-end; gap: 6px; height: 56px; margin: 0.4rem 0; }
 .eq span { width: 11px; height: 100%; border: 2px solid var(--ink); border-radius: 6px; animation: eq 0.9s ease-in-out infinite alternate; }
 .eq span:nth-child(1) { background: var(--orange); animation-delay: -0.1s; }
-.eq span:nth-child(2) { background: var(--blue);   animation-delay: -0.5s; }
+.eq span:nth-child(2) { background: var(--teal);   animation-delay: -0.5s; }
 .eq span:nth-child(3) { background: var(--yellow); animation-delay: -0.3s; }
-.eq span:nth-child(4) { background: var(--green);  animation-delay: -0.7s; }
+.eq span:nth-child(4) { background: var(--brick);  animation-delay: -0.7s; }
 .eq span:nth-child(5) { background: var(--orange); animation-delay: -0.2s; }
-.eq span:nth-child(6) { background: var(--blue);   animation-delay: -0.6s; }
+.eq span:nth-child(6) { background: var(--teal);   animation-delay: -0.6s; }
 .eq span:nth-child(7) { background: var(--yellow); animation-delay: -0.4s; }
 @keyframes eq { from { height: 14%; } to { height: 100%; } }
 @media (prefers-reduced-motion: reduce) { .eq span { animation: none; height: 60%; } }
@@ -244,7 +238,7 @@ header[data-testid="stHeader"] { background: transparent; }
 .count { background: var(--yellow); border: 2px solid var(--ink); border-radius: 999px; padding: 0 0.65rem; font-weight: 600; font-size: 0.9rem; line-height: 1.5rem; }
 .empty {
   border: 2px dashed var(--cream); border-radius: 20px; padding: 1.6rem 1.4rem;
-  background: rgba(20, 18, 58, 0.5); color: var(--cream); line-height: 1.5;
+  background: rgba(14, 40, 38, 0.55); color: var(--cream); line-height: 1.5;
 }
 .st-key-discography { max-height: calc(100vh - 12.5rem); overflow-y: auto; padding: 0 10px 10px 0; }
 @media (max-width: 900px) { .st-key-discography { max-height: none; overflow: visible; } }
