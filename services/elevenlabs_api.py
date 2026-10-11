@@ -100,6 +100,39 @@ def speak(text: str, voice_id: str) -> str:
     return _save_audio(audio, _out("speech"))
 
 
+def compose_acapella(lyrics: str, style: str) -> str:
+    """Tricks the Music API into generating solo vocals without instruments."""
+    if _fakes():
+        return make_test_tone(_out("fake_acapella"), seconds=6, freq=440)
+    
+    # We heavily prompt the AI to avoid generating any background music
+    acapella_prompt = (
+        f"Raw acapella, strictly one single vocalist, no backup singers, "
+        f"no harmonies, unaccompanied, zero instruments. {style}\n\nLyrics:\n{lyrics}"
+    )
+    
+    audio = _client().music.compose(
+        prompt=acapella_prompt,
+        music_length_ms=BACKING_LENGTH_MS,
+        force_instrumental=False,
+    )
+    return _save_audio(audio, _out("ai_acapella"))
+
+def sing_sts(vocal_path: str, voice_id: str) -> str:
+    """Uses Speech-to-Speech to apply the user's voice."""
+    if _fakes():
+        return make_test_tone(_out("fake_sts"), seconds=6, freq=660)
+    
+    with open(vocal_path, "rb") as f:
+        audio = _client().speech_to_speech.convert(
+            voice_id=voice_id,
+            audio=f,
+            model_id="eleven_english_sts_v2"
+        )
+        # INDENT THIS LINE so it stays inside the 'with' block!
+        return _save_audio(audio, _out("sts_vocals"))
+
+
 def make_backing_track(style: str) -> str:
     """Generate an instrumental backing track for the given style. Returns an audio file path."""
     if _fakes():
