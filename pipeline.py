@@ -22,13 +22,13 @@ def _step(name, fn, *args):
     return result
 
 
-def make_song(audio_path: str) -> dict:
+def make_song(audio_path: str, vibe: str = "Ridiculous & Melodramatic") -> dict:
     """Returns {"audio_path", "title", "lyrics", "transcript"}."""
     try:
         # 1. Setup user inputs
         transcript = _step("transcribe", eleven.transcribe, audio_path)
         voice_id = _step("clone_voice", eleven.clone_voice, audio_path)
-        song = _step("make_lyrics", gemma.make_lyrics, transcript)
+        song = _step("make_lyrics", gemma.make_lyrics, transcript, vibe)
         
         # 2. Generate the Ghost Singer (Acapella only)
         ai_acapella = _step("compose_acapella", eleven.compose_acapella, song["lyrics"], song["style"])
