@@ -333,7 +333,7 @@ def slugify(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-") or "song"
 
 
-def generate(audio_file, slot) -> bool:
+def generate(audio_file, vibe: str, slot) -> bool:
     """Run the pipeline on a recording, with an animation in `slot` while it works."""
     with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as f:
         f.write(audio_file.getvalue())
@@ -346,7 +346,7 @@ def generate(audio_file, slot) -> bool:
         unsafe_allow_html=True,
     )
     try:
-        song = make_song(tmp_path)
+        song = make_song(tmp_path, vibe=vibe)
     except Exception as e:  # noqa: BLE001 - surface any pipeline failure to the user
         slot.empty()
         st.error(f"Couldn't make that song: {e}. Your recording is still here, so you can try again.")
@@ -421,11 +421,26 @@ with left:
             + "</div>",
             unsafe_allow_html=True,
         )
+
+        vibe_options = [
+            "Chill & Genuine",
+            "Playful & Quirky",
+            "Sarcastic & Witty",
+            "Ridiculous & Melodramatic",
+            "Unhinged Chaos",
+        ]
+        selected_vibe = st.select_slider(
+            "Vibe & Humor",
+            options=vibe_options,
+            value="Ridiculous & Melodramatic",
+            help="Controls how exaggerated, silly, or serious the lyrics will be.",
+        )
+
         status_slot = st.empty()
         go = st.button("Make my song", type="primary", disabled=audio is None)
 
         if go and audio is not None:
-            if generate(audio, status_slot):
+            if generate(audio, selected_vibe, status_slot):
                 st.session_state.rec_n += 1  # clear the recorder for the next idea
                 st.rerun()
 

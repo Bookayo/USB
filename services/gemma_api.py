@@ -26,13 +26,13 @@ def _fakes() -> bool:
     return os.getenv("USE_FAKES", "1") == "1"
 
 
-def make_lyrics(transcript: str) -> dict:
+def make_lyrics(transcript: str, vibe: str = "Ridiculous & Melodramatic") -> dict:
     """Returns {"lyrics": str, "style": str, "title": str}."""
     if _fakes():
         return {
             "title": "Oat Milk Betrayal",
-            "style": "slow dramatic power ballad, piano and strings",
-            "lyrics": f"Oh, {transcript}...\nThe fridge is empty now.\nThe fridge is empty now.",
+            "style": f"slow dramatic power ballad, piano and strings, {vibe.lower()} mood",
+            "lyrics": f"Oh, {transcript}...\nThe fridge is empty now.\nThe fridge is empty now."
         }
 
     api_key = os.getenv("GEMINI_API_KEY")
@@ -43,13 +43,14 @@ def make_lyrics(transcript: str) -> dict:
 
     prompt = (
         f"{SYSTEM_PROMPT}\n\n"
-        f"Transform this spoken transcript into a song:\n"
+        f"Desired Mood/Humor Level: {vibe}\n"
+        f"Transform this spoken transcript into a song matching that mood:\n"
         f'"{transcript}"'
     )
 
     response = client.models.generate_content(
         model=MODEL,
-        contents=prompt,
+        contents=prompt
     )
 
     text = response.text.strip()
