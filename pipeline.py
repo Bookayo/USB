@@ -25,14 +25,23 @@ def _step(name, fn, *args):
 def make_song(audio_path: str) -> dict:
     """Returns {"audio_path", "title", "lyrics", "transcript"}."""
     try:
+        # 1. Setup user inputs
         transcript = _step("transcribe", eleven.transcribe, audio_path)
         voice_id = _step("clone_voice", eleven.clone_voice, audio_path)
-        song = _step("make_lyrics", gemma.make_lyrics, transcript)  # {"lyrics","style","title"}
-        speech = _step("speak", eleven.speak, song["lyrics"], voice_id)
+        song = _step("make_lyrics", gemma.make_lyrics, transcript)
+        
+        # 2. Generate the Ghost Singer (Acapella only)
+        ai_acapella = _step("compose_acapella", eleven.compose_acapella, song["lyrics"], song["style"])
+        
+        # 3. STS: Map the user's voice onto the AI Acapella
+        user_vocals = _step("sing_sts", eleven.sing_sts, ai_acapella, voice_id)
+        
+        # 4. Generate the instrumental beat separately
         backing = _step("backing_track", eleven.make_backing_track, song["style"])
 
-        out_path = os.path.join("outputs", f"song_{uuid.uuid4().hex[:8]}.mp3")
-        final = _step("mix", mix_voice_over_backing, speech, backing, out_path)
+        # 5. Mix the two together using your existing audio_utils
+        out_path = os.path.join("outputs", f"final_mix_{uuid.uuid4().hex[:8]}.mp3")
+        final = _step("mix", mix_voice_over_backing, user_vocals, backing, out_path)
 
         result = {
             "audio_path": final,

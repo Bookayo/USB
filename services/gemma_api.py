@@ -17,7 +17,7 @@ SYSTEM_PROMPT = (
     "{\n"
     '  "title": "Song Title",\n'
     '  "style": "genre, tempo, instrumentation, mood",\n'
-    '  "lyrics": "[Verse 1]\\n...\\n[Chorus]\\n..."\n'
+    '  "lyrics": "[Verse 1]\\n...\\n[Chorus]\\n...\\n[Fade Out]\\n..."\n'
     "}"
 )
 
