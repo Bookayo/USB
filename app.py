@@ -35,7 +35,7 @@ from pipeline import make_song  # noqa: E402  (must come after the ffmpeg check)
 
 st.set_page_config(page_title="Say-nthesizer", page_icon="🎤", layout="wide")
 
-SWATCHES = ["#E8662A", "#2F7F7A", "#F2B632", "#B5492B"]  # orange, teal, mustard, brick
+SWATCHES = ["#A879FF", "#62D6C5", "#D5B8FF", "#7B4BB7"]
 
 EXAMPLES = [
     "A power ballad about my flatmate stealing my oat milk",
@@ -111,26 +111,29 @@ CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap');
 
 :root {
-  --card: #FAF3E3;
-  --cream: #F6E8C3;
-  --ink: #1F2328;
-  --muted: #5A5A52;
-  --orange: #E8662A;
-  --teal: #2F7F7A;
-  --yellow: #F2B632;
-  --brick: #B5492B;
+  --card: #282238;
+  --cream: #F0EAF8;
+  --ink: #110D1A;
+  --muted: #B4A9C9;
+  --orange: #A879FF;
+  --teal: #62D6C5;
+  --yellow: #D5B8FF;
+  --brick: #7B4BB7;
   --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
 }
 
 /* ---------- wallpaper: dusty teal, tone-on-tone doodles, 70s arcs ---------- */
 .stApp {
-  background-color: black;
+  background-color: #171421;
+  background-image:
+    linear-gradient(135deg, #171421 0%, #21182F 55%, #171421 100%),
+    url("__PATTERN__");
   background-size: 100% 100%, 100% 100%, 100% 100%, 560px 560px;
-  background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+  background-repeat: no-repeat, repeat;
   background-attachment: fixed;
-  color: var(--ink);
+  color: var(--cream);
   font-family: 'Figtree', system-ui, sans-serif;
-  color-scheme: light;
+  color-scheme: dark;
 }
 [data-testid="stAppViewContainer"], [data-testid="stMain"] { background: transparent; }
 header[data-testid="stHeader"] { background: transparent; }
@@ -153,8 +156,9 @@ header[data-testid="stHeader"] { background: transparent; }
   text-shadow: 3px 3px 0 var(--ink);
 }
 .tagline {
+  color: #171421;
   margin: 0;
-  background: var(--yellow);
+  background: #D5B8FF;
   border: 2px solid var(--ink);
   border-radius: 999px;
   padding: 0.45rem 1.15rem;
@@ -176,25 +180,38 @@ header[data-testid="stHeader"] { background: transparent; }
 .panel-title { font-family: var(--display); font-weight: 800; font-size: 1.4rem; letter-spacing: -0.01em; }
 .panel-sub { color: var(--muted); margin: 0.15rem 0 0.9rem; }
 [data-testid="stAudioInput"] > div {
-  border: 2px solid var(--ink) !important;
+  border: 2px solid #A879FF !important;
   border-radius: 16px !important;
-  background: #fff !important;
+  background: #302641 !important;
+  color: #F0EAF8 !important;
+}
+
+[data-testid="stAudioInput"] button {
+  background: #302641 !important;
+  color: #F0EAF8 !important;
+  border-color: #A879FF !important;
 }
 .hint { color: var(--muted); font-size: 0.9rem; margin: 0.9rem 0 0.4rem; }
 .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.1rem; }
-.chip { border: 1.5px solid var(--ink); border-radius: 999px; padding: 0.25rem 0.8rem; font-size: 0.88rem; background: #fff; }
-
+.chip {
+  border: 1.5px solid #71549B;
+  border-radius: 999px;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.88rem;
+  background: #302641;
+  color: #F0EAF8;
+}
 /* ---------- buttons ---------- */
 .stApp .stButton, .stApp .stDownloadButton { width: 100%; }
 .stApp .stButton > button,
 .stApp .stDownloadButton > button {
   width: 100%;
-  background: #fff;
-  color: var(--ink);
-  border: 2px solid var(--ink);
+  background: #302641;
+  color: #F0EAF8;
+  border: 2px solid #A879FF;
   border-radius: 999px;
   padding: 0.7rem 1.4rem;
-  box-shadow: 3px 3px 0 var(--ink);
+  box-shadow: 3px 3px 0 #0D0914;
   transition: transform 0.08s ease, box-shadow 0.08s ease;
 }
 .stApp .stButton > button p,
@@ -202,17 +219,27 @@ header[data-testid="stHeader"] { background: transparent; }
 .stApp .stDownloadButton > button { padding: 0.5rem 1rem; }
 .stApp .stDownloadButton > button p { font-size: 0.95rem; }
 .stApp .stButton > button[kind="primary"],
-.stApp .stButton > button[data-testid="stBaseButton-primary"] { background: var(--orange); }
+.stApp .stButton > button[data-testid="stBaseButton-primary"] { background: #A879FF; color: #171421; }
 .stApp .stButton > button:hover,
-.stApp .stDownloadButton > button:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink); color: var(--ink); border-color: var(--ink); }
+.stApp .stDownloadButton > button:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #0D0914; color: #171421; border-color: #C2A1FF; background: #C2A1FF;}
 .stApp .stButton > button:active,
 .stApp .stDownloadButton > button:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--ink); }
 .stApp .stButton > button:focus-visible,
-.stApp .stDownloadButton > button:focus-visible { outline: 3px solid var(--teal); outline-offset: 3px; }
+.stApp .stDownloadButton > button:focus-visible { outline: 3px solid #62D6C5; outline-offset: 3px; }
 .stApp .stButton > button:disabled,
 .stApp .stButton > button[kind="primary"]:disabled,
 .stApp .stButton > button[data-testid="stBaseButton-primary"]:disabled {
-  background: #D3D0C8; color: #666A70; border-color: #8D9096; box-shadow: none; transform: none; cursor: not-allowed;
+  background: #5B3D80 !important;
+  color: #F0EAF8 !important;
+  border: 2px solid #A879FF !important;
+  box-shadow: none;
+  transform: none;
+  opacity: 1 !important;
+  cursor: not-allowed;
+}
+.stApp .stButton > button:disabled p {
+  color: #F0EAF8 !important;
+  opacity: 1 !important;
 }
 
 /* ---------- generating animation ---------- */
@@ -237,8 +264,12 @@ header[data-testid="stHeader"] { background: transparent; }
 }
 .count { background: var(--yellow); border: 2px solid var(--ink); border-radius: 999px; padding: 0 0.65rem; font-weight: 600; font-size: 0.9rem; line-height: 1.5rem; }
 .empty {
-  border: 2px dashed var(--cream); border-radius: 20px; padding: 1.6rem 1.4rem;
-  background: rgba(14, 40, 38, 0.55); color: var(--cream); line-height: 1.5;
+  border: 2px dashed #A879FF;
+  border-radius: 20px;
+  padding: 1.6rem 1.4rem;
+  background: #282238 !important;
+  color: #F0EAF8;
+  line-height: 1.5;
 }
 .st-key-discography { max-height: calc(100vh - 12.5rem); overflow-y: auto; padding: 0 10px 10px 0; }
 @media (max-width: 900px) { .st-key-discography { max-height: none; overflow: visible; } }
@@ -255,7 +286,21 @@ header[data-testid="stHeader"] { background: transparent; }
 .song-meta { color: var(--muted); font-size: 0.85rem; }
 .song-title { font-family: var(--display); font-weight: 800; font-size: 1.3rem; letter-spacing: -0.015em; line-height: 1.15; }
 [class*="st-key-song_"] audio { width: 100%; }
-[class*="st-key-song_"] [data-testid="stExpander"] details { border: 2px solid var(--ink); border-radius: 12px; background: #fff; }
+[class*="st-key-song_"] [data-testid="stExpander"] details {
+  border: 2px solid #71549B;
+  border-radius: 12px;
+  background: #21182F !important;
+  color: #F0EAF8;
+}
+
+[class*="st-key-song_"] [data-testid="stExpander"] summary {
+  background: #21182F !important;
+  color: #F0EAF8 !important;
+}
+
+[class*="st-key-song_"] .lyrics {
+  color: #F0EAF8 !important;
+}
 [class*="st-key-song_"] [data-testid="stExpander"] summary { font-weight: 600; }
 .lyrics { line-height: 1.7; max-width: 62ch; max-height: 240px; overflow-y: auto; padding: 0.25rem 0 0.5rem; }
 
