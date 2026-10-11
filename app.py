@@ -264,14 +264,24 @@ header[data-testid="stHeader"] { background: transparent; }
 }
 .count { background: var(--yellow); border: 2px solid var(--ink); border-radius: 999px; padding: 0 0.65rem; font-weight: 600; font-size: 0.9rem; line-height: 1.5rem; }
 .empty {
+  box-sizing: border-box;
+  width: 100%;
   border: 2px dashed #A879FF;
   border-radius: 20px;
   padding: 1.6rem 1.4rem;
+  margin: 2px 0 6px;
   background: #282238 !important;
-  color: #F0EAF8;
-  line-height: 1.5;
+  color: #F0EAF8 !important;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
 }
-.st-key-discography { max-height: calc(100vh - 12.5rem); overflow-y: auto; padding: 0 10px 10px 0; }
+.st-key-discography {
+  max-height: calc(100vh - 12.5rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 12px 12px 4px;
+  box-sizing: border-box;
+}
 @media (max-width: 900px) { .st-key-discography { max-height: none; overflow: visible; } }
 
 [class*="st-key-song_"] {
